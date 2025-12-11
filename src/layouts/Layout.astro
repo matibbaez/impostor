@@ -1,0 +1,36 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Juego del Impostor de Fútbol - Impostor League" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+        <title>{title}</title>
+        <ClientRouter />
+    </head>
+    
+    <body class="min-h-[100dvh] flex flex-col items-center relative overflow-hidden text-white selection:bg-cyan-500 selection:text-white">
+        
+        <div class="bg-grid fixed inset-0 -z-20"></div>
+        <div class="bg-glow-center fixed -z-10 pointer-events-none"></div>
+
+        <slot />
+
+    </body>
+</html>

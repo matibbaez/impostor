@@ -1,16 +1,82 @@
 ---
-
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Impostor League | Home">
+    <Navbar />
+
+    <main class="flex-1 flex flex-col items-center justify-center w-full max-w-md px-6 mx-auto pt-28 pb-10">
+        
+        <div class="mb-10 relative w-full flex flex-col items-center animate-fade-in-up">
+            <div class="absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-cyan-500/20 blur-[90px] rounded-full -z-10"></div>
+            
+            <h1 class="text-6xl md:text-7xl font-black italic tracking-tight text-center relative z-10 drop-shadow-2xl flex flex-col items-center">
+    
+				<span class="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400 pr-4 pb-1">
+					IMPOSTOR
+				</span>
+
+				<span class="block text-3xl not-italic font-medium tracking-[0.3em] text-cyan-400 mt-[-10px] filter drop-shadow-[0_0_10px_rgba(34,211,238,0.5)] pl-2">
+					LEAGUE
+				</span>
+
+			</h1>
+
+            <div class="flex gap-3 mt-6">
+                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1">
+                    ⚡ Rápido
+                </span>
+                <span class="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1">
+                    👥 3-10 Jugadores
+                </span>
+            </div>
+        </div>
+
+        <div class="w-full space-y-4 mb-12 animate-fade-in-up delay-100 relative z-20">
+            
+            <a href="/game" class="group relative block w-full">
+                <div class="absolute inset-0 bg-cyan-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                <div class="relative w-full py-6 bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-xl flex flex-col items-center justify-center transform transition-all duration-200 group-hover:scale-[1.02] group-hover:border-cyan-400 active:scale-95 overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-cyan-600/10 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                    <span class="text-2xl font-black uppercase tracking-widest flex items-center gap-3 text-white group-hover:text-cyan-300 transition-colors">
+                        <span class="text-3xl group-hover:animate-bounce">⚽</span> Jugar Local
+                    </span>
+                    <p class="text-[10px] text-cyan-200/70 mt-2 font-bold uppercase tracking-widest bg-cyan-900/30 px-3 py-1 rounded-full border border-cyan-500/10">
+                        Modo Pasa el Celular
+                    </p>
+                </div>
+            </a>
+
+            <button disabled class="w-full py-4 bg-slate-900/50 border border-white/5 rounded-2xl cursor-not-allowed flex items-center justify-center gap-3 opacity-60">
+                <span class="text-sm font-bold uppercase tracking-widest text-gray-500">Modo Online</span>
+                <span class="bg-gray-800 text-gray-500 text-[9px] px-2 py-0.5 rounded border border-gray-700">WIP</span>
+            </button>
+        </div>
+
+        <div class="w-full animate-fade-in-up delay-200">
+            <div class="flex items-center justify-between mb-4 px-2">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-gray-500">Categorías Populares</h3>
+                <span class="text-[10px] text-cyan-400 font-bold">+10 packs</span>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-3">
+                <div class="bg-slate-800/40 border border-white/5 rounded-xl p-3 flex flex-col items-center gap-2 hover:bg-slate-800 hover:border-cyan-500/30 transition group cursor-default">
+                    <span class="text-2xl grayscale group-hover:grayscale-0 transition duration-300">⚽</span>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-white uppercase">Fútbol</span>
+                </div>
+                <div class="bg-slate-800/40 border border-white/5 rounded-xl p-3 flex flex-col items-center gap-2 hover:bg-slate-800 hover:border-cyan-500/30 transition group cursor-default">
+                    <span class="text-2xl grayscale group-hover:grayscale-0 transition duration-300">🍔</span>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-white uppercase">Marcas</span>
+                </div>
+                <div class="bg-slate-800/40 border border-white/5 rounded-xl p-3 flex flex-col items-center gap-2 hover:bg-slate-800 hover:border-cyan-500/30 transition group cursor-default">
+                    <span class="text-2xl grayscale group-hover:grayscale-0 transition duration-300">🎬</span>
+                    <span class="text-[10px] font-bold text-gray-400 group-hover:text-white uppercase">Cine</span>
+                </div>
+            </div>
+        </div>
+
+        <Footer />
+    </main>
+</Layout>
