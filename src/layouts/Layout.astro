@@ -13,21 +13,20 @@ const { title } = Astro.props;
 <html lang="es">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="Juego del Impostor de Fútbol - Impostor League" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-        <title>{title}</title>
         <ClientRouter />
     </head>
     
-    <body class="min-h-[100dvh] w-full flex flex-col items-center relative overflow-x-hidden overflow-y-auto text-white selection:bg-cyan-500 selection:text-white bg-slate-950 touch-manipulation">
+    <body class="min-h-[100dvh] w-full flex flex-col items-center relative overflow-x-hidden overflow-y-auto bg-slate-950 text-white touch-manipulation">
         
-        <div class="fixed inset-0 w-full h-full -z-20 bg-grid" transition:persist></div>
+        <div class="fixed inset-0 w-full h-full -z-20 bg-grid pointer-events-none" transition:persist></div>
         <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[600px] bg-glow-center -z-10 pointer-events-none" transition:persist></div>
 
         <slot />
@@ -36,15 +35,17 @@ const { title } = Astro.props;
 </html>
 
 <style is:global>
-    /* OPTIMIZACIÓN DE RENDIMIENTO MOBILE:
-       Reducimos la complejidad de la animación de transición 
-       para que no "congele" el celular.
+    /* 🚀 TRUCO DE RENDIMIENTO SUPREMO 🚀
+       Desactivamos la animación de transición de Astro (View Transitions).
+       El celular ya no tiene que hacer una "captura de pantalla" y mezclarla.
+       El cambio de página será instantáneo (corte directo), eliminando el lag.
     */
     ::view-transition-group(root) {
-        animation-duration: 0.2s;
+        animation: none !important;
+        mix-blend-mode: normal !important;
     }
-    
-    /* Scroll suave */
+
+    /* Asegurar scroll suave nativo */
     html {
         scroll-behavior: smooth;
     }

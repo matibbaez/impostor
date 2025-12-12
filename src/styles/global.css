@@ -58,18 +58,18 @@ body {
   filter: blur(60px);
 }
 
-/* =========================================
-   PANELES DE VIDRIO (Glassmorphism Pro)
-   ========================================= */
 .glass-panel {
-  background: var(--grad-surface);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.15); /* Luz superior */
-  box-shadow: 
-    0 20px 40px -10px rgba(0, 0, 0, 0.7),
-    inset 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra interna */
+  /* MOBILE: Fondo sólido con transparencia (Rápido) */
+  background: rgba(15, 23, 42, 0.95); 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  
+  /* DESKTOP (md): Activamos el blur solo si la pantalla es grande */
+  @media (min-width: 768px) {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 }
 
 /* TÍTULOS METÁLICOS */
@@ -165,9 +165,8 @@ body {
 
 /* Utilidad para animar entrada de elementos */
 .animate-fade-in-up {
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-  transform: translateY(20px);
+    will-change: transform, opacity;
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 .delay-100 { animation-delay: 100ms; }
