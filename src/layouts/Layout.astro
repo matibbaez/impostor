@@ -14,38 +14,46 @@ const { title } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
+        
+        <meta name="theme-color" content="#020617" />
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="Impostor">
+        
+        <link rel="manifest" href="/manifest.json">
+        
+        <link rel="apple-touch-icon" href="/icon-192.png">
+
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+        <title>{title}</title>
         <ClientRouter />
     </head>
     
-    <body class="min-h-[100dvh] w-full flex flex-col items-center relative bg-slate-950 text-white touch-manipulation">
+    <body class="min-h-[100dvh] w-full flex flex-col items-center relative overflow-x-hidden overflow-y-auto bg-slate-950 text-white touch-manipulation">
+        
         <div class="fixed inset-0 w-full h-full -z-20 bg-grid pointer-events-none" transition:persist></div>
         <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[600px] h-[600px] bg-glow-center -z-10 pointer-events-none" transition:persist></div>
 
         <slot />
 
+        <script is:inline>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(registration => {
+                            console.log('SW registrado: ', registration.scope);
+                        })
+                        .catch(err => {
+                            console.log('SW falló: ', err);
+                        });
+                });
+            }
+        </script>
+
     </body>
 </html>
-
-<style is:global>
-    /* 🚀 TRUCO DE RENDIMIENTO SUPREMO 🚀
-       Desactivamos la animación de transición de Astro (View Transitions).
-       El celular ya no tiene que hacer una "captura de pantalla" y mezclarla.
-       El cambio de página será instantáneo (corte directo), eliminando el lag.
-    */
-    ::view-transition-group(root) {
-        animation: none !important;
-        mix-blend-mode: normal !important;
-    }
-
-    /* Asegurar scroll suave nativo */
-    html {
-        scroll-behavior: smooth;
-    }
-</style>
