@@ -20,9 +20,8 @@ import { futbolistas } from '../data/players.js';
     <main class="w-full h-[100dvh] max-w-md mx-auto px-5 flex flex-col justify-center relative z-10 overflow-hidden touch-manipulation">
         
         <section id="setup-view" class="w-full text-center animate-fade-in-up">
-            <div class="glass-panel rounded-3xl p-6 py-8 shadow-2xl border-t border-white/10 bg-black/60 backdrop-blur-md">
-                
-                <h2 class="text-white font-black italic text-2xl uppercase tracking-tighter mb-8 flex items-center justify-center gap-2">
+            <div class="glass-panel rounded-3xl p-6 py-8 shadow-2xl border-t border-white/10 bg-black/80">                
+                <h2 class="text-white font-black italic text-xl uppercase tracking-tighter mb-8 flex items-center justify-center gap-2">
                     <span class="text-cyan-400">CONFIGURAR</span> SALA
                 </h2>
                 
@@ -46,7 +45,7 @@ import { futbolistas } from '../data/players.js';
                     </div>
                 </div>
 
-                <button id="btn-start" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-black text-lg uppercase tracking-[0.2em] rounded-2xl shadow-lg active:scale-95 transition-transform border border-white/20 touch-manipulation">
+                <button id="btn-start" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-black text-base uppercase tracking-[0.2em] rounded-2xl shadow-lg active:scale-95 transition-transform border border-white/20 touch-manipulation">
                     REPARTIR CARTAS
                 </button>
             </div>
@@ -88,10 +87,10 @@ import { futbolistas } from '../data/players.js';
                         <p class="text-[9px] font-bold uppercase tracking-[0.3em] mb-4 text-cyan-400/60 z-10">Tu Identidad</p>
                         
                         <div class="z-10 w-full flex flex-col items-center justify-center flex-grow">
-                            <h2 id="role-name" class="text-4xl sm:text-5xl font-black uppercase text-center leading-tight break-words hyphens-auto w-full text-white drop-shadow-md transition-colors duration-300">
+                            <h2 id="role-name" class="text-3xl sm:text-5xl font-black uppercase text-center leading-tight break-words hyphens-auto w-full text-white drop-shadow-md transition-colors duration-300 px-2">
                                 ...
                             </h2>
-                            <div id="impostor-icon" class="hidden mt-6 text-6xl animate-bounce filter drop-shadow-xl grayscale brightness-125">🤫</div>
+                            <div id="impostor-icon" class="hidden mt-6 text-5xl animate-bounce filter drop-shadow-xl grayscale brightness-125">🤫</div>
                         </div>
                     </div>
 
