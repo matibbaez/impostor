@@ -19,11 +19,18 @@
 body {
   background-color: var(--bg-deep);
   color: white;
-  font-family: 'Exo 2', sans-serif; /* Cambio de fuente aquí */
-  overflow: hidden; 
-  user-select: none;
-  -webkit-touch-callout: none;
-  min-height: 100dvh;
+  font-family: 'Exo 2', sans-serif;
+  
+  /* --- CAMBIO IMPORTANTE --- */
+  /* ANTES: overflow: hidden; (BORRAR ESTO) */
+  /* AHORA: Permite scroll vertical y oculta el horizontal */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* ------------------------- */
+
+  /* Critical for mobile feeling */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 /* =========================================
