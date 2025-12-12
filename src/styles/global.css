@@ -1,42 +1,57 @@
 @import "tailwindcss";
 
-/* FUENTE: Exo 2
-   Es geométrica, futurista y deportiva. Perfecta para interfaces de juegos. */
+/* FUENTE: Exo 2 */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300..900;1,300..900&display=swap');
 
-:root {
-  /* Paleta de colores más vibrante (Neon Cyberpunk) */
-  --bg-deep: #020617;      /* Slate 950 */
-  --neon-cyan: #00f0ff;    /* Cyan brillante */
-  --neon-blue: #3b82f6;    /* Azul eléctrico */
-  --impostor-red: #ff0055; /* Rojo saturado */
-  
-  /* Gradientes predefinidos */
-  --grad-surface: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
-  --grad-impostor: linear-gradient(135deg, #be123c 0%, #881337 100%);
+@theme {
+  --font-sans: 'Exo 2', sans-serif;
+  --color-neon-cyan: #00f0ff;
+  --color-impostor-red: #ff0055;
 }
 
+:root {
+  --bg-deep: #020617;      /* Slate 950 */
+}
+
+/* =========================================
+   CORE & SCROLL FIXES
+   ========================================= */
 body {
   background-color: var(--bg-deep);
   color: white;
   font-family: 'Exo 2', sans-serif;
   
-  /* --- CAMBIO IMPORTANTE --- */
-  /* ANTES: overflow: hidden; (BORRAR ESTO) */
-  /* AHORA: Permite scroll vertical y oculta el horizontal */
+  /* PERMITIR SCROLL VERTICAL */
   overflow-y: auto;
   overflow-x: hidden;
-  /* ------------------------- */
 
-  /* Critical for mobile feeling */
+  /* OPTIMIZACIÓN MOBILE */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  
+  /* Aceleración de Hardware */
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* =========================================
-   FONDO MEJORADO (Cyber Grid)
-   En lugar de estrellas simples, una cuadrícula 
-   que se desvanece en los bordes.
+   🚀 OPTIMIZACIÓN EXTREMA DE NAVEGACIÓN 🚀
+   Esto elimina el "Lag" o "Bajos FPS" al cambiar de página
+   ========================================= */
+::view-transition-group(root) {
+    animation-duration: 0s !important;
+    animation: none !important;
+    mix-blend-mode: normal !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none !important;
+    display: none !important;
+}
+
+/* =========================================
+   FONDO TECNOLÓGICO (Optimizado GPU)
    ========================================= */
 .bg-grid {
   position: absolute;
@@ -51,7 +66,6 @@ body {
   pointer-events: none;
 }
 
-/* Glow central para dar profundidad */
 .bg-glow-center {
   position: absolute;
   top: 50%;
@@ -65,6 +79,9 @@ body {
   filter: blur(60px);
 }
 
+/* =========================================
+   PANELES DE VIDRIO (Rendimiento Mobile)
+   ========================================= */
 .glass-panel {
   /* MOBILE: Fondo sólido con transparencia (Rápido) */
   background: rgba(15, 23, 42, 0.95); 
@@ -79,101 +96,56 @@ body {
   }
 }
 
-/* TÍTULOS METÁLICOS */
-.text-gradient {
-  background: linear-gradient(180deg, #ffffff 20%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 10px rgba(255,255,255,0.2));
-}
-
 /* =========================================
-   CARTAS DE JUEGO
+   CARTA DEL JUGADOR (Estilo Dark / Confidencial)
    ========================================= */
-.player-card {
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efecto rebote suave */
-  background: linear-gradient(145deg, #ffffff 0%, #e2e8f0 100%);
-  color: #0f172a;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+#card-content {
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Fondo Oscuro (Slate-900) por defecto */
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    box-shadow: 
+        inset 0 0 20px rgba(0,0,0,0.5),
+        0 10px 30px -5px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Estado Oculto (Misterio) */
-.player-card.hidden-content {
-  filter: blur(12px) brightness(0.6) contrast(1.2);
-  transform: scale(0.92) translateY(10px);
-  opacity: 0.8;
+/* ESTADO: IMPOSTOR (Rojo Peligro) - Se activa con JS */
+.impostor-active {
+    background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%) !important;
+    border-color: #ef4444 !important;
+    box-shadow: 
+        0 0 30px rgba(220, 38, 38, 0.4),
+        inset 0 0 20px rgba(0,0,0,0.5) !important;
+    animation: pulse-danger 2s infinite;
 }
 
-/* Estado Revelado (Impacto) */
-.player-card.revealed-content {
-  filter: blur(0);
-  transform: scale(1) translateY(0);
-  box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.5), /* Borde fino */
-    0 20px 50px -10px rgba(0, 240, 255, 0.5); /* Glow Cyan */
-}
-
-/* Variante IMPOSTOR */
-.impostor-bg {
-  background: var(--grad-impostor) !important;
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 
-    0 0 0 1px rgba(255, 0, 85, 0.5),
-    0 20px 60px -10px rgba(255, 0, 76, 0.6) !important;
-  animation: pulse-danger 2s infinite;
-}
-
-/* =========================================
-   BOTÓN DE MANTENER (SCANNER)
-   ========================================= */
-.hold-btn {
-  /* Fondo estilo escáner dactilar */
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.2) 0%, rgba(6, 182, 212, 0.1) 60%, transparent 100%);
-  border: 2px solid var(--neon-cyan);
-  box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 20px var(--neon-cyan);
-  color: var(--neon-cyan);
-  transition: transform 0.1s ease-out, box-shadow 0.2s;
-  touch-action: none;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Efecto de "onda" al presionar */
-.hold-btn::after {
-  content: '';
-  position: absolute;
-  inset: -10px;
-  background: radial-gradient(circle, var(--neon-cyan) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.hold-btn:active {
-  transform: scale(0.90);
-  background: var(--neon-cyan);
-  color: #000;
-  box-shadow: 0 0 40px var(--neon-cyan);
-}
-
-.hold-btn:active::after {
-  opacity: 0.4;
+.impostor-text {
+    color: #fecaca !important;
+    text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
 }
 
 /* =========================================
    ANIMACIONES
    ========================================= */
 @keyframes pulse-danger {
-  0% { box-shadow: 0 0 0 0 rgba(255, 0, 76, 0.4); }
-  70% { box-shadow: 0 0 0 15px rgba(255, 0, 76, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(255, 0, 76, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 76, 0.4); border-color: #ef4444; }
+  70% { box-shadow: 0 0 0 15px rgba(255, 0, 76, 0); border-color: #fca5a5; }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 76, 0); border-color: #ef4444; }
 }
 
-/* Utilidad para animar entrada de elementos */
+/* Animación de entrada ligera */
 .animate-fade-in-up {
     will-change: transform, opacity;
+    opacity: 0;
     animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* En mobile muy lento, quitamos la animación de entrada si quieres aún más velocidad */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .delay-100 { animation-delay: 100ms; }
@@ -181,8 +153,21 @@ body {
 .delay-300 { animation-delay: 300ms; }
 
 @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.animate-zoom-in {
+    animation: zoomIn 0.4s ease-out forwards;
 }
