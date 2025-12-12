@@ -14,7 +14,9 @@ const { title } = Astro.props;
     <head>
         <meta charset="UTF-8" />
         <meta name="description" content="Juego del Impostor de Fútbol - Impostor League" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
+        
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,12 +27,20 @@ const { title } = Astro.props;
         <ClientRouter />
     </head>
     
-    <body class="min-h-[100dvh] flex flex-col items-center relative overflow-hidden text-white selection:bg-cyan-500 selection:text-white">
+    <body class="min-h-[100dvh] flex flex-col items-center relative overflow-hidden text-white selection:bg-cyan-500 selection:text-white bg-slate-950 touch-manipulation">
         
-        <div class="bg-grid fixed inset-0 -z-20"></div>
-        <div class="bg-glow-center fixed -z-10 pointer-events-none"></div>
+        <div class="bg-grid fixed inset-0 -z-20" transition:persist></div>
+        <div class="bg-glow-center fixed -z-10 pointer-events-none" transition:persist></div>
 
         <slot />
 
     </body>
 </html>
+
+<style is:global>
+    /* Suavizar la transición de entrada/salida de las páginas */
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.2s; /* Más rápido es mejor para mobile */
+    }
+</style>

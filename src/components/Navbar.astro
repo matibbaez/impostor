@@ -1,21 +1,51 @@
 ---
 const pathname = Astro.url.pathname;
 
-// Función helper para saber si el link está activo
-const isActive = (path: string) => pathname === path || (path !== '/' && pathname.startsWith(path));
+// Helper: Verifica si la ruta actual es la activa
+const isActive = (path: string) => pathname === path;
+
+const btnBase = "relative group flex flex-col items-center justify-center w-16 h-14 rounded-2xl transition-all duration-300 active:scale-90 touch-manipulation";
+const activeClass = "text-cyan-400";
+const inactiveClass = "text-slate-500 hover:text-slate-300";
 ---
 
-<nav class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-4">
-    <div class="bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-full px-1.5 py-1.5 flex items-center shadow-2xl shadow-cyan-500/10 max-w-sm w-full justify-between">
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-8 pt-4 pointer-events-none bg-gradient-to-t from-slate-950 via-slate-950/80 to-transparent">
+    
+    <div class="pointer-events-auto bg-[#0f172a]/80 backdrop-blur-xl border border-white/10 rounded-3xl px-6 py-2 flex items-center gap-8 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
         
-        <a href="/" class={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${isActive('/') ? 'bg-cyan-600/20 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-cyan-500/30' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
-            <span>🏠</span> Inicio
+        <a href="/" 
+           data-astro-prefetch="viewport" 
+           aria-label="Inicio"
+           class:list={[btnBase, isActive('/') ? activeClass : inactiveClass]}>
+            
+            <div class:list={["absolute inset-0 bg-cyan-500/10 rounded-xl blur-lg transition-opacity duration-300", isActive('/') ? "opacity-100" : "opacity-0"]}></div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 relative z-10 transition-transform duration-300 group-hover:-translate-y-1" viewBox="0 0 24 24" fill={isActive('/') ? "currentColor" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1 relative z-10 opacity-80">Inicio</span>
+            <div class:list={["absolute -bottom-1 w-1 h-1 bg-cyan-400 rounded-full transition-all duration-300", isActive('/') ? "scale-100 opacity-100" : "scale-0 opacity-0"]}></div>
         </a>
 
-        <div class="w-px h-4 bg-white/10"></div>
+        <div class="w-px h-8 bg-white/10 rounded-full"></div>
 
-        <a href="/how-to-play" class={`px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 flex items-center gap-2 ${isActive('/how-to-play') ? 'bg-cyan-600/20 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-cyan-500/30' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}>
-            <span>❔</span> Reglas
+        <a href="/how-to-play" 
+           data-astro-prefetch="viewport"
+           aria-label="Ayuda"
+           class:list={[btnBase, isActive('/how-to-play') ? activeClass : inactiveClass]}>
+            
+            <div class:list={["absolute inset-0 bg-cyan-500/10 rounded-xl blur-lg transition-opacity duration-300", isActive('/how-to-play') ? "opacity-100" : "opacity-0"]}></div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 relative z-10 transition-transform duration-300 group-hover:-translate-y-1" viewBox="0 0 24 24" fill={isActive('/how-to-play') ? "currentColor" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <path d="M12 17h.01"/>
+            </svg>
+
+            <span class="text-[10px] font-bold uppercase tracking-widest mt-1 relative z-10 opacity-80">Ayuda</span>
+            <div class:list={["absolute -bottom-1 w-1 h-1 bg-cyan-400 rounded-full transition-all duration-300", isActive('/how-to-play') ? "scale-100 opacity-100" : "scale-0 opacity-0"]}></div>
         </a>
 
     </div>

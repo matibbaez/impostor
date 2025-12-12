@@ -5,166 +5,232 @@ import { futbolistas } from '../data/players.js';
 
 <Layout title="Partida en Curso | Impostor League">
     
-    <header class="absolute top-0 w-full p-6 flex justify-between items-center z-30 pointer-events-none">
-        <a href="/" class="group flex items-center gap-2 text-white/50 hover:text-white transition pointer-events-auto">
-            <span class="text-xl group-hover:-translate-x-1 transition-transform">←</span>
-            <span class="text-xs font-bold uppercase tracking-widest">Salir</span>
+    <header class="absolute top-0 w-full p-6 flex justify-between items-center z-50 pointer-events-none">
+        <a href="/" data-astro-reload class="pointer-events-auto w-10 h-10 rounded-full bg-slate-900/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white/50 hover:bg-red-500/20 hover:text-white hover:border-red-500/30 transition-all active:scale-90 shadow-lg touch-manipulation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
         </a>
-        <div class="h-1 w-12 bg-cyan-400 rounded-full shadow-[0_0_15px_#00f0ff]"></div>
+
+        <div class="h-1.5 w-16 bg-slate-800 rounded-full overflow-hidden border border-white/5">
+            <div id="progress-bar" class="h-full w-0 bg-cyan-400 shadow-[0_0_10px_#22d3ee] transition-all duration-500 ease-out"></div>
+        </div>
     </header>
 
-    <main class="w-full min-h-[100dvh] max-w-md mx-auto px-5 flex flex-col justify-center relative z-10 overflow-hidden">
+    <main class="w-full h-[100dvh] max-w-md mx-auto px-5 flex flex-col justify-center relative z-10 overflow-hidden touch-manipulation">
         
         <section id="setup-view" class="w-full text-center animate-fade-in-up">
-            <div class="glass-panel rounded-3xl p-6 py-10 shadow-2xl border-t border-white/10 bg-black/40 backdrop-blur-xl">
-                <p class="text-cyan-400 text-[10px] font-bold uppercase tracking-[0.3em] mb-8 opacity-80">Configuración</p>
+            <div class="glass-panel rounded-3xl p-6 py-8 shadow-2xl border-t border-white/10 bg-black/60 backdrop-blur-md">
                 
-                <div class="flex items-center justify-between mb-10 px-2">
-                    <button id="btn-minus" class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-3xl text-white active:bg-cyan-500/20 transition shadow-lg">-</button>
-                    
-                    <div class="flex flex-col items-center w-24">
-                        <span id="player-count" class="text-7xl font-black text-white leading-none font-mono">4</span>
-                        <span class="text-[9px] text-cyan-200/60 uppercase tracking-widest mt-2 border-t border-white/10 pt-2 w-full">Jugadores</span>
+                <h2 class="text-white font-black italic text-2xl uppercase tracking-tighter mb-8 flex items-center justify-center gap-2">
+                    <span class="text-cyan-400">CONFIGURAR</span> SALA
+                </h2>
+                
+                <div class="mb-8">
+                    <p class="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-3 opacity-80">Total Jugadores</p>
+                    <div class="flex items-center justify-between px-2 bg-slate-900/50 rounded-2xl border border-white/5 p-2">
+                        <button id="btn-minus-player" class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 text-2xl text-white active:bg-cyan-500/20 active:scale-95 transition shadow-lg touch-manipulation">-</button>
+                        <span id="player-count" class="text-5xl font-black text-white font-mono">4</span>
+                        <button id="btn-plus-player" class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 text-2xl text-white active:bg-cyan-500/20 active:scale-95 transition shadow-lg touch-manipulation">+</button>
                     </div>
-                    
-                    <button id="btn-plus" class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 text-3xl text-white active:bg-cyan-500/20 transition shadow-lg">+</button>
                 </div>
 
-                <button id="btn-start" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-black text-lg uppercase tracking-[0.2em] rounded-2xl shadow-[0_0_20px_rgba(8,145,178,0.4)] active:scale-95 transition-all border border-white/20">
-                    INICIAR
+                <div class="mb-10">
+                    <p class="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-3 opacity-80">Cantidad de Impostores</p>
+                    <div class="flex items-center justify-center gap-6 px-2">
+                        <button id="btn-minus-impo" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/20 text-xl text-red-200 active:bg-red-500/40 active:scale-95 transition touch-manipulation disabled:opacity-30">-</button>
+                        <div class="flex flex-col items-center w-16">
+                            <span id="impo-count" class="text-4xl font-black text-red-500 font-mono drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]">1</span>
+                        </div>
+                        <button id="btn-plus-impo" class="w-10 h-10 rounded-xl bg-red-900/20 border border-red-500/20 text-xl text-red-200 active:bg-red-500/40 active:scale-95 transition touch-manipulation disabled:opacity-30">+</button>
+                    </div>
+                </div>
+
+                <button id="btn-start" class="w-full py-5 bg-gradient-to-r from-cyan-600 to-blue-700 text-white font-black text-lg uppercase tracking-[0.2em] rounded-2xl shadow-lg active:scale-95 transition-transform border border-white/20 touch-manipulation">
+                    REPARTIR CARTAS
                 </button>
             </div>
         </section>
 
-        <section id="transition-view" class="hidden w-full text-center animate-fade-in py-10">
+        <section id="transition-view" class="hidden w-full text-center animate-fade-in">
              <div class="flex flex-col items-center justify-center h-full">
-                
-                <div class="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse border-4 border-red-500 shadow-[0_0_40px_rgba(239,68,68,0.4)]">
-                    <span class="text-5xl">✋</span>
+                <div class="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center mb-6 animate-pulse border-4 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.3)]">
+                    <span class="text-4xl">✋</span>
                 </div>
-
                 <h2 class="text-4xl font-black text-white uppercase italic mb-6 tracking-tighter">ALTO AHÍ</h2>
-                
-                <div class="bg-slate-900/80 border border-white/10 p-6 rounded-3xl mb-8 w-full backdrop-blur-xl">
+                <div class="bg-slate-900 border border-white/10 p-6 rounded-3xl mb-8 w-full shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
                     <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Entrégalo al</p>
-                    <p class="text-cyan-400 text-3xl font-black uppercase tracking-widest">
+                    <p class="text-cyan-400 text-4xl font-black uppercase tracking-widest">
                         JUGADOR <span id="next-player-num" class="text-white">1</span>
                     </p>
                 </div>
-
-                <button id="btn-ready" class="w-full py-5 bg-white text-slate-900 font-black text-lg uppercase tracking-widest rounded-2xl shadow-xl active:scale-95 transition hover:bg-gray-200">
+                <button id="btn-ready" class="w-full py-5 bg-white text-slate-900 font-black text-lg uppercase tracking-widest rounded-2xl shadow-xl active:scale-95 transition hover:bg-gray-200 touch-manipulation">
                     Soy el Jugador <span id="btn-ready-num">1</span>
                 </button>
             </div>
         </section>
 
-        <section id="game-view" class="hidden w-full flex flex-col items-center justify-between h-[85dvh] py-2">
+        <section id="game-view" class="hidden w-full flex flex-col items-center h-full py-4 pb-8 relative">
              
-            <div class="text-center w-full mb-2 opacity-0 animate-slide-down" style="animation-delay: 0.1s; animation-fill-mode: forwards;">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-950/80 border border-cyan-500/30 backdrop-blur-md shadow-lg">
-                    <div class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></div>
-                    <span class="text-cyan-100 text-[10px] font-bold uppercase tracking-widest">Identidad Secreta</span>
-                </div>
+            <div class="w-full h-12 flex items-center justify-center opacity-0 animate-slide-down" style="animation-fill-mode: forwards;">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-cyan-200/50 bg-cyan-950/30 px-3 py-1 rounded-full border border-cyan-500/10 backdrop-blur-sm">
+                    Identidad Oculta
+                </span>
             </div>
 
-            <div class="relative w-full aspect-[3/4] max-h-[380px] perspective-1000 my-auto">
-                
-                <div id="card-content" class="w-full h-full rounded-[2rem] flex flex-col items-center justify-center p-6 border-2 border-white/10 relative overflow-hidden bg-slate-900 shadow-2xl transition-colors duration-200">
+            <div class="flex-1 w-full flex flex-col items-center justify-center min-h-0 my-4 perspective-1000">
+                <div class="relative w-full aspect-[3/4] max-h-[380px]">
                     
-                    <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
-                    
-                    <p class="text-[9px] font-bold uppercase tracking-[0.3em] mb-4 text-cyan-400/60 z-10">Tu Identidad</p>
-                    
-                    <div class="z-10 w-full flex flex-col items-center justify-center flex-grow">
-                        <h2 id="role-name" class="text-4xl sm:text-5xl font-black uppercase text-center leading-tight break-words hyphens-auto w-full text-white drop-shadow-md">
-                            ...
-                        </h2>
+                    <div id="card-content" class="w-full h-full rounded-[2rem] flex flex-col items-center justify-center p-6 border-2 border-white/10 relative overflow-hidden bg-slate-900 shadow-2xl transition-all duration-300">
+                        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
                         
-                        <div id="impostor-icon" class="hidden mt-6 text-6xl animate-bounce filter drop-shadow-xl grayscale brightness-125">🤫</div>
-                    </div>
-                </div>
-
-                <div id="card-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950 rounded-[2rem] border border-white/10 transition-all duration-300 transform origin-center">
-                    
-                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-700 to-transparent"></div>
-                    
-                    <span class="text-6xl mb-4 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] relative z-10">🛡️</span>
-                    
-                    <div class="bg-black/60 px-5 py-2 rounded-full border border-white/5 relative z-10">
-                        <p class="text-white/80 font-bold uppercase tracking-[0.2em] text-[10px]">Confidencial</p>
+                        <p class="text-[9px] font-bold uppercase tracking-[0.3em] mb-4 text-cyan-400/60 z-10">Tu Identidad</p>
+                        
+                        <div class="z-10 w-full flex flex-col items-center justify-center flex-grow">
+                            <h2 id="role-name" class="text-4xl sm:text-5xl font-black uppercase text-center leading-tight break-words hyphens-auto w-full text-white drop-shadow-md transition-colors duration-300">
+                                ...
+                            </h2>
+                            <div id="impostor-icon" class="hidden mt-6 text-6xl animate-bounce filter drop-shadow-xl grayscale brightness-125">🤫</div>
+                        </div>
                     </div>
 
-                    <p class="absolute bottom-10 text-white/20 text-[9px] uppercase tracking-widest animate-pulse">Sistema Bloqueado</p>
+                    <div id="card-overlay" class="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950 rounded-[2rem] border border-white/10 transition-all duration-300 transform origin-center">
+                        <span class="text-6xl mb-4 relative z-10 drop-shadow-lg">🛡️</span>
+                        <div class="bg-gray-900 px-5 py-2 rounded-full border border-white/5 relative z-10">
+                            <p class="text-white/80 font-bold uppercase tracking-[0.2em] text-[10px]">Confidencial</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="w-full flex flex-col items-center gap-6 mt-4">
+            <div class="w-full flex flex-col items-center mt-auto gap-6 z-30">
                 
-                <div class="relative flex items-center justify-center w-full h-28">
-                    <div id="scan-ring" class="absolute w-20 h-20 rounded-full border-2 border-cyan-400 opacity-0 transition-all duration-200 scale-100 pointer-events-none"></div>
-
-                    <button id="btn-hold" class="relative w-20 h-20 rounded-full bg-slate-800 border-4 border-slate-700 flex items-center justify-center z-10 touch-none outline-none active:scale-95 active:border-cyan-500 transition-all shadow-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white/50 pointer-events-none transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
-                        </svg>
-                    </button>
+                <div class="flex flex-col items-center gap-3">
+                    <div class="relative w-24 h-24 flex items-center justify-center">
+                        <div id="scan-ring" class="absolute inset-0 rounded-full border-2 border-cyan-400 opacity-0 transition-all duration-200 scale-100 pointer-events-none"></div>
+                        
+                        <button id="btn-hold" class="relative w-20 h-20 rounded-full bg-slate-800 border-4 border-slate-700 flex items-center justify-center z-10 touch-none select-none outline-none active:scale-95 active:border-cyan-500 transition-all shadow-xl -webkit-tap-highlight-transparent">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white/50 pointer-events-none transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.131A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+                            </svg>
+                        </button>
+                    </div>
                     
-                    <p class="absolute bottom-0 text-cyan-200/50 text-[9px] font-bold uppercase tracking-[0.2em] pointer-events-none">
-                        Mantén presionado
+                    <p class="text-cyan-200/50 text-[10px] font-bold uppercase tracking-[0.2em] pointer-events-none animate-pulse">
+                        Mantén para revelar
                     </p>
                 </div>
 
-                <button id="btn-next" class="w-full py-4 rounded-xl bg-white/5 border border-white/5 text-gray-400 font-bold uppercase text-[10px] tracking-[0.2em] hover:bg-white/10 active:bg-white/20 transition-colors mb-4">
-                    Listo, Siguiente
+                <button id="btn-next" class="w-full py-4 rounded-xl bg-slate-800/80 border border-cyan-500/30 text-cyan-400 font-bold uppercase text-[11px] tracking-[0.2em] shadow-[0_0_15px_rgba(8,145,178,0.1)] hover:bg-cyan-950/50 active:bg-cyan-900/80 active:scale-95 transition-all touch-manipulation">
+                    Listo, Siguiente Jugador
                 </button>
             </div>
         </section>
 
-        <section id="play-view" class="hidden w-full text-center animate-zoom-in">
-            <div class="relative py-12">
-                <div class="absolute inset-0 bg-cyan-500/20 blur-[60px] rounded-full"></div>
-                <h2 class="text-7xl font-black text-white italic uppercase relative z-10 drop-shadow-2xl">
-                    PLAY!
-                </h2>
-            </div>
+        <section id="play-view" class="hidden w-full h-full flex flex-col items-center justify-between py-6 animate-zoom-in relative">
             
-            <div class="glass-panel border border-cyan-500/20 bg-black/40 p-6 rounded-3xl mb-12 backdrop-blur-md">
-                <p class="text-lg text-gray-300 font-light leading-relaxed">
-                    <span class="text-cyan-400 font-black text-xl block mb-2">BUSQUEN AL IMPOSTOR</span>
-                    El tiempo corre.
+            <div class="absolute inset-0 bg-gradient-to-b from-cyan-900/10 via-transparent to-transparent pointer-events-none"></div>
+
+            <div class="w-full text-center space-y-2 mt-4 relative z-10">
+                <h2 class="text-4xl font-black italic uppercase text-white tracking-tighter drop-shadow-lg">
+                    DEBATE
+                </h2>
+                <p class="text-xs text-cyan-300/70 font-bold uppercase tracking-widest">
+                    Descubran al Impostor
                 </p>
             </div>
+            
+            <div class="flex-1 flex flex-col items-center justify-center w-full relative z-10">
+                
+                <div class="relative mb-8 flex flex-col items-center justify-center">
+                    <div id="timer-glow" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-cyan-500/20 blur-[80px] rounded-full transition-all duration-500 pointer-events-none"></div>
+                    
+                    <div id="timer-display" class="relative text-8xl font-mono font-black text-white tracking-widest tabular-nums drop-shadow-[0_0_15px_rgba(34,211,238,0.5)] select-none z-10">
+                        00:00
+                    </div>
+                    
+                    <p class="relative z-10 text-[9px] text-cyan-500/50 font-bold uppercase tracking-[0.4em] mt-4">
+                        Tiempo Transcurrido
+                    </p>
+                </div>
 
-            <button id="btn-reset" class="w-full py-5 bg-white text-black font-black uppercase tracking-widest rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.3)] active:scale-95 transition-transform">
-                Reiniciar
-            </button>
+                <div class="flex items-center justify-center mb-10 relative z-20">
+                    <button id="btn-timer-toggle" class="w-24 h-24 rounded-full bg-slate-800 border-2 border-cyan-500/30 text-cyan-400 flex items-center justify-center active:scale-95 transition-all shadow-[0_0_30px_rgba(34,211,238,0.1)] hover:bg-slate-700 hover:shadow-cyan-500/30 touch-manipulation">
+                        
+                        <svg id="icon-play" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 hidden" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
+                        </svg>
+                        
+                        <svg id="icon-pause" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="glass-panel border border-white/5 bg-slate-900/60 p-4 rounded-2xl backdrop-blur-md w-full max-w-xs text-center cursor-pointer active:scale-95 transition-transform select-none relative z-20 shadow-lg" onclick="document.getElementById('secret-reveal').classList.toggle('blur-md')">
+                    <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1">Palabra Secreta</p>
+                    <span id="secret-reveal" class="text-2xl font-black text-cyan-400 blur-md transition-all duration-300 block">
+                        ...
+                    </span>
+                    <p class="text-[9px] text-gray-600 mt-1">(Toca para ver)</p>
+                </div>
+
+            </div>
+
+            <div class="w-full mt-auto space-y-3 relative z-20">
+                <div class="text-center">
+                     <p class="text-xs text-gray-500">
+                        Hay <span id="result-impo-count" class="text-red-400 font-bold">1</span> Impostor entre nosotros
+                    </p>
+                </div>
+                
+                <button id="btn-reset" class="w-full py-4 bg-white text-slate-950 font-black uppercase tracking-widest rounded-xl shadow-lg active:scale-95 transition-transform touch-manipulation">
+                    Nueva Partida
+                </button>
+            </div>
         </section>
 
     </main>
 </Layout>
 
 <style>
-    /* Clases utilitarias para cambios de estado dinámicos */
+    /* ESTILOS CRÍTICOS DEL IMPOSTOR 
+      Se aplican con !important para sobrescribir el estilo base de la carta 
+    */
     .impostor-active {
-        background-color: #7f1d1d !important; /* Red-900 */
-        border-color: #ef4444 !important; /* Red-500 */
+        background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%) !important; /* Rojo Oscuro */
+        border-color: #ef4444 !important; /* Borde Rojo Brillante */
+        box-shadow: 
+            0 0 30px rgba(220, 38, 38, 0.4),
+            inset 0 0 20px rgba(0,0,0,0.5) !important;
+        animation: pulse-danger 2s infinite;
     }
-    
+
     .impostor-text {
-        text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        color: #fecaca !important; /* Texto rojo pálido */
+        text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+    }
+
+    @keyframes pulse-danger {
+        0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.3); border-color: #ef4444; }
+        50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.6); border-color: #fca5a5; }
     }
 </style>
 
 <script define:vars={{ futbolistas }}>
     document.addEventListener('astro:page-load', () => {
+        let totalPlayers = 4;
+        let totalImpostors = 1;
+        let currentTurn = 0;
+        let impostorIndices = new Set();
+        let secretWord = "";
         
-        // --- ESTADO ---
-        let count = 4;
-        let current = 0;
-        let impostor = -1;
-        let secret = "";
+        // VARIABLES CRONÓMETRO (STOPWATCH)
+        let timeElapsed = 0; // Empieza en 0
+        let timerInterval = null;
+        let isPaused = false;
 
-        // --- REFERENCIAS ---
         const views = {
             setup: document.getElementById('setup-view'),
             transition: document.getElementById('transition-view'),
@@ -173,7 +239,8 @@ import { futbolistas } from '../data/players.js';
         };
         
         const ui = {
-            countDisplay: document.getElementById('player-count'),
+            playerCount: document.getElementById('player-count'),
+            impoCount: document.getElementById('impo-count'),
             nextPlayerNum: document.getElementById('next-player-num'),
             readyPlayerNum: document.getElementById('btn-ready-num'),
             cardContent: document.getElementById('card-content'),
@@ -181,148 +248,228 @@ import { futbolistas } from '../data/players.js';
             roleName: document.getElementById('role-name'),
             impostorIcon: document.getElementById('impostor-icon'),
             btnHold: document.getElementById('btn-hold'),
-            scanRing: document.getElementById('scan-ring')
+            scanRing: document.getElementById('scan-ring'),
+            progressBar: document.getElementById('progress-bar'),
+            resultImpoCount: document.getElementById('result-impo-count'),
+            // Timer UI
+            timerDisplay: document.getElementById('timer-display'),
+            btnTimerToggle: document.getElementById('btn-timer-toggle'),
+            iconPlay: document.getElementById('icon-play'),
+            iconPause: document.getElementById('icon-pause'),
+            secretReveal: document.getElementById('secret-reveal')
         };
 
-        // --- SETUP ---
-        const btnPlus = document.getElementById('btn-plus');
-        const btnMinus = document.getElementById('btn-minus');
+        if (!ui.btnHold) return;
 
-        if (btnPlus && btnMinus) {
-            btnPlus.onclick = () => { if(count < 20) ui.countDisplay.innerText = ++count; };
-            btnMinus.onclick = () => { if(count > 3) ui.countDisplay.innerText = --count; };
-        }
+        // --- FUNCIONES DEL CRONÓMETRO ---
+        const formatTime = (seconds) => {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        };
 
-        const btnStart = document.getElementById('btn-start');
-        if (btnStart) {
-            btnStart.onclick = () => {
-                current = 0;
-                impostor = Math.floor(Math.random() * count);
-                secret = futbolistas[Math.floor(Math.random() * futbolistas.length)];
-                gotoTransition();
-            };
-        }
+        const updateTimerDisplay = () => {
+            ui.timerDisplay.innerText = formatTime(timeElapsed);
+        };
 
-        // --- NAVIGATION ---
+        const startTimer = () => {
+            if (timerInterval) clearInterval(timerInterval);
+            isPaused = false;
+            updatePlayPauseIcon();
+            
+            timerInterval = setInterval(() => {
+                if (!isPaused) {
+                    timeElapsed++; // Sumamos tiempo en lugar de restar
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        };
+
+        const togglePause = () => {
+            isPaused = !isPaused;
+            updatePlayPauseIcon();
+        };
+
+        const updatePlayPauseIcon = () => {
+            if (isPaused) {
+                // ESTADO: PAUSADO (Mostrar Play)
+                ui.iconPause.classList.add('hidden');
+                ui.iconPlay.classList.remove('hidden');
+                
+                // Efectos visuales de Pausa (Ámbar/Amarillo)
+                ui.timerDisplay.classList.add('opacity-50'); 
+                
+                ui.btnTimerToggle.classList.remove('border-cyan-500/30', 'text-cyan-400');
+                ui.btnTimerToggle.classList.add('border-amber-500/50', 'text-amber-400', 'animate-pulse');
+            } else {
+                // ESTADO: CORRIENDO (Mostrar Pausa)
+                ui.iconPause.classList.remove('hidden');
+                ui.iconPlay.classList.add('hidden');
+                
+                // Efectos visuales de Play (Cyan original)
+                ui.timerDisplay.classList.remove('opacity-50');
+                
+                ui.btnTimerToggle.classList.add('border-cyan-500/30', 'text-cyan-400');
+                ui.btnTimerToggle.classList.remove('border-amber-500/50', 'text-amber-400', 'animate-pulse');
+            }
+        };
+
+        if (ui.btnTimerToggle) ui.btnTimerToggle.onclick = togglePause;
+
+        // --- LÓGICA GENERAL JUEGO ---
+
+        const updateConfigUI = () => {
+            ui.playerCount.innerText = totalPlayers;
+            ui.impoCount.innerText = totalImpostors;
+            const maxImpostors = Math.max(1, Math.floor((totalPlayers - 1) / 2));
+            if (totalImpostors > maxImpostors) {
+                totalImpostors = maxImpostors;
+                ui.impoCount.innerText = totalImpostors;
+            }
+        };
+
+        document.getElementById('btn-plus-player').onclick = (e) => { e.preventDefault(); if(totalPlayers < 20) { totalPlayers++; updateConfigUI(); } };
+        document.getElementById('btn-minus-player').onclick = (e) => { e.preventDefault(); if(totalPlayers > 3) { totalPlayers--; updateConfigUI(); } };
+
+        document.getElementById('btn-plus-impo').onclick = (e) => { 
+            e.preventDefault(); 
+            const maxImpostors = Math.max(1, Math.floor((totalPlayers - 1) / 2));
+            if(totalImpostors < maxImpostors) { totalImpostors++; updateConfigUI(); }
+        };
+        document.getElementById('btn-minus-impo').onclick = (e) => { e.preventDefault(); if(totalImpostors > 1) { totalImpostors--; updateConfigUI(); } };
+
+        document.getElementById('btn-start').onclick = () => {
+            currentTurn = 0;
+            impostorIndices.clear();
+            while(impostorIndices.size < totalImpostors) {
+                impostorIndices.add(Math.floor(Math.random() * totalPlayers));
+            }
+            secretWord = futbolistas[Math.floor(Math.random() * futbolistas.length)];
+            ui.resultImpoCount.innerText = totalImpostors;
+            
+            // Reset Timer al iniciar
+            timeElapsed = 0; 
+            if(timerInterval) clearInterval(timerInterval);
+            
+            const progressBar = document.getElementById('progress-bar');
+            if(progressBar) progressBar.style.width = '0%';
+            
+            gotoTransition();
+        };
+
         function gotoTransition() {
             hideAllViews();
             views.transition.classList.remove('hidden');
-            const playerNum = current + 1;
-            ui.nextPlayerNum.innerText = playerNum;
-            ui.readyPlayerNum.innerText = playerNum;
+            const pNum = currentTurn + 1;
+            ui.nextPlayerNum.innerText = pNum;
+            ui.readyPlayerNum.innerText = pNum;
         }
 
         function gotoGame() {
             hideAllViews();
             views.game.classList.remove('hidden');
-            resetCard();
+            
+            // Reset Card State
+            const overlay = document.getElementById('card-overlay');
+            const content = document.getElementById('card-content');
+            const roleText = document.getElementById('role-name');
+            const icon = document.getElementById('impostor-icon');
+            
+            overlay.style.opacity = '1';
+            overlay.style.pointerEvents = 'auto';
+            overlay.style.transform = 'scale(1)';
+            
+            content.classList.remove('impostor-active');
+            roleText.innerText = "...";
+            roleText.classList.remove('impostor-text');
+            icon.classList.add('hidden');
         }
 
         function gotoPlay() {
             hideAllViews();
             views.play.classList.remove('hidden');
+            
+            if(ui.secretReveal) {
+                ui.secretReveal.innerText = secretWord;
+                ui.secretReveal.classList.add('blur-md');
+            }
+            
+            // INICIAR CRONÓMETRO (Cuenta Adelante)
+            updateTimerDisplay();
+            startTimer();
         }
 
         function hideAllViews() {
             Object.values(views).forEach(el => el && el.classList.add('hidden'));
         }
 
-        const btnReady = document.getElementById('btn-ready');
-        if (btnReady) btnReady.onclick = gotoGame;
+        document.getElementById('btn-ready').onclick = gotoGame;
 
-        // --- REVEAL LOGIC (FIXED) ---
         const reveal = (e) => {
-            if (e.cancelable) e.preventDefault();
+            if (e.type === 'touchstart' || e.type === 'contextmenu') if (e.cancelable) e.preventDefault();
             
-            // UI Feedback visual del botón
             ui.scanRing.classList.remove('opacity-0', 'scale-100');
             ui.scanRing.classList.add('opacity-100', 'scale-150');
-            ui.btnHold.children[0].classList.add('text-cyan-300'); // Icon Color
+            ui.btnHold.children[0].classList.add('text-cyan-300');
 
-            const isImpostor = current === impostor;
+            const isImpostor = impostorIndices.has(currentTurn);
             
-            // 1. Preparar el contenido "detrás" del overlay
             if (isImpostor) {
                 ui.roleName.innerText = "IMPOSTOR";
-                ui.cardContent.classList.add('impostor-active'); // Fondo Rojo
+                ui.cardContent.classList.add('impostor-active');
                 ui.roleName.classList.add('impostor-text');
                 ui.impostorIcon.classList.remove('hidden');
-                
-                if (navigator.vibrate) navigator.vibrate([80, 50, 80]); 
+                if (navigator.vibrate) navigator.vibrate([50, 50, 50]); 
             } else {
-                ui.roleName.innerText = secret;
-                ui.cardContent.classList.remove('impostor-active'); // Fondo Slate-900 (defecto)
+                ui.roleName.innerText = secretWord;
+                ui.cardContent.classList.remove('impostor-active');
                 ui.roleName.classList.remove('impostor-text');
                 ui.impostorIcon.classList.add('hidden');
-                
-                if (navigator.vibrate) navigator.vibrate(30); 
+                if (navigator.vibrate) navigator.vibrate(20); 
             }
 
-            // 2. Ocultar Overlay (Fade Out)
-            // Como el overlay es sólido, ahora sí podemos desvanecerlo
             ui.cardOverlay.style.opacity = '0';
-            ui.cardOverlay.style.transform = 'scale(1.05)';
-            ui.cardOverlay.style.pointerEvents = 'none'; // Asegurar click through
+            ui.cardOverlay.style.transform = 'scale(1.1)';
+            ui.cardOverlay.style.pointerEvents = 'none';
         };
 
         const hide = (e) => {
-            if (e && e.cancelable) e.preventDefault();
-            
-            // Reset UI Botón
             ui.scanRing.classList.add('opacity-0', 'scale-100');
             ui.scanRing.classList.remove('opacity-100', 'scale-150');
             ui.btnHold.children[0].classList.remove('text-cyan-300');
 
-            // Reset Overlay (Vuelve a tapar todo inmediatamente o con transición rápida)
             ui.cardOverlay.style.opacity = '1';
             ui.cardOverlay.style.transform = 'scale(1)';
             ui.cardOverlay.style.pointerEvents = 'auto';
 
-            // Reset Contenido (para seguridad, limpiamos el texto)
             setTimeout(() => {
-                // Solo si el overlay ya está tapando visualmente
                 if(ui.cardOverlay.style.opacity === '1') {
                     ui.roleName.innerText = "...";
                     ui.cardContent.classList.remove('impostor-active');
                     ui.impostorIcon.classList.add('hidden');
                 }
-            }, 250); // Esperar a que la transición de opacidad termine un poco
+            }, 250);
         };
 
-        function resetCard() {
-            // Estado inicial forzado
-            ui.cardOverlay.style.opacity = '1';
-            ui.cardContent.classList.remove('impostor-active');
-            ui.roleName.innerText = "...";
-        }
+        ui.btnHold.addEventListener('touchstart', reveal, { passive: false });
+        ui.btnHold.addEventListener('touchend', hide);
+        ui.btnHold.addEventListener('touchcancel', hide);
+        ui.btnHold.addEventListener('mousedown', reveal);
+        ui.btnHold.addEventListener('mouseup', hide);
+        ui.btnHold.addEventListener('mouseleave', hide);
 
-        if (ui.btnHold) {
-            ui.btnHold.addEventListener('touchstart', reveal, { passive: false });
-            ui.btnHold.addEventListener('touchend', hide);
-            ui.btnHold.addEventListener('touchcancel', hide);
+        document.getElementById('btn-next').onclick = () => {
+            currentTurn++;
+            const progressBar = document.getElementById('progress-bar');
+            if(progressBar) progressBar.style.width = `${(currentTurn / totalPlayers) * 100}%`;
             
-            // Mouse (Desktop testing)
-            ui.btnHold.addEventListener('mousedown', reveal);
-            ui.btnHold.addEventListener('mouseup', hide);
-            ui.btnHold.addEventListener('mouseleave', hide);
-        }
+            if (currentTurn >= totalPlayers) {
+                gotoPlay();
+            } else {
+                gotoTransition();
+            }
+        };
 
-        // --- NEXT / RESET ---
-        const btnNext = document.getElementById('btn-next');
-        if (btnNext) {
-            btnNext.onclick = () => {
-                current++;
-                if (current >= count) {
-                    gotoPlay();
-                } else {
-                    gotoTransition();
-                }
-            };
-        }
-
-        const btnReset = document.getElementById('btn-reset');
-        if (btnReset) {
-            btnReset.onclick = () => window.location.reload();
-        }
+        document.getElementById('btn-reset').onclick = () => window.location.href = window.location.href;
     });
 </script>
